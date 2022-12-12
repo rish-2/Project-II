@@ -1,0 +1,5 @@
+colorama==0.4.6
+mitm==1.4.2
+scapy==2.4.5
+termcolor==2.1.1
+pywin32
