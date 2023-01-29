@@ -1,4 +1,4 @@
-from pywin32_system32 import win32serviceutil
+import win32serviceutil
 import time
 
 
