@@ -20,8 +20,8 @@ cr=Fore.RED
 cm=Fore.LIGHTMAGENTA_EX
 res=Fore.RESET
 
-ipadd='192.168.154.246'             #<===!!!!!!!CHANGE IP BEFORE EXECUTING!!!!!!!!===>
-interface = IFACES.dev_from_index(15)  #<===!!!!!!!CHECK INTERFACE USING SCAPY IN CMD AND IFACES!!!!!!!!===>
+ipadd='192.168. .'             #<===!!!!!!!CHANGE IP BEFORE EXECUTING!!!!!!!!===>
+interface = IFACES.dev_from_index(<number>)  #<===!!!!!!!CHECK INTERFACE USING SCAPY IN CMD AND IFACES!!!!!!!!===>
 def packet_TCP(pckt):
     print('\u21c5'+ str(" [{}] ".format(time.strftime("%H:%M:%S")))+"   "+"TCP-IN:{}".format(str(len(pckt[TCP]))+"Bytes"+"\n"
     +"SRC-MAC:"+ str(pckt.src)+"    "+"DST-MAC:"+str(pckt.dst)+
@@ -73,30 +73,34 @@ def Packet_Monitor(pckt):
         #packet_UDP(pckt)
         if IP in pckt:
             if ipadd==pckt[IP].dst:
-                print(f"{cb}\u2191"*25+f"{cm}UDP-OUT{res}"+f'{cb}\u2191'*25)                            
-                print(str(" [{}] ".format(time.strftime("%H:%M:%S")))+" "+"UDP-OUT:{}".format(str(len(pckt[UDP]))+"Bytes"+"  "
-                +"SRC-MAC:"+str(pckt.src)+"    "+"DST-MAC:"+str(pckt.src)+
-                "    "+"SRC-PORT:"+str(pckt.sport)+"    "+"DST-PORT:"+str(pckt.dport)+"    "+
-                "SRC-IP:"+str(pckt[IP].src)+"    "+"DST-IP:"+str(pckt[IP].dst),res))
+                print(f"{cg}\u2193"*25+f"{cm}UDP-IN{res}"+f'{cg}\u2193'*25)                            
+                print(str(" [{}] ".format(time.strftime("%H:%M:%S")))+" "+"\nSIZE:{}".format(str(len(pckt[UDP]))+"Bytes"
+                +"\nSRC-MAC:"+str(pckt.src).ljust(20)+"    "+"DST-MAC:"+str(pckt.src)+
+                "\n"+"SRC-PORT:"+str(pckt.sport).ljust(19)+"    "+"DST-PORT:"+str(pckt.dport)+"\n"+
+                "SRC-IP:"+str(pckt[IP].src).ljust(17)+"    "+"DST-IP:"+str(pckt[IP].dst),res))
             if ipadd==pckt[IP].src:
-                print(f"{cg}\u2193"*25+f"{cm}UDP-IN{res}"+f"{cg}\u2193"*25)                            
-                print(str(" [{}] ".format(time.strftime("%H:%M:%S")))+" "+"UDP-OUT:{}".format(str(len(pckt[UDP]))+"Bytes"+"  "
-                +"SRC-MAC:"+str(pckt.src)+"    "+"DST-MAC:"+str(pckt.src)+
-                "    "+"SRC-PORT:"+str(pckt.sport)+"    "+"DST-PORT:"+str(pckt.dport)+"    "+
-                "SRC-IP:"+str(pckt[IP].src)+"    "+"DST-IP:"+str(pckt[IP].dst),res))
+                print(f"{cb}\u2191"*25+f"{cm}UDP-OUT{res}"+f"{cb}\u2191"*25)                            
+                print(str(" [{}] ".format(time.strftime("%H:%M:%S")))+" "+"\nSIZE:{}".format(str(len(pckt[UDP]))+"Bytes"+"\n"
+                +"SRC-MAC:"+str(pckt.src).ljust(20)+"    "+"DST-MAC:"+str(pckt.src)+
+                "\n"+"SRC-PORT:"+str(pckt.sport).ljust(19)+"    "+"DST-PORT:"+str(pckt.dport)+"\n"+
+                "SRC-IP:"+str(pckt[IP].src).ljust(17)+"    "+"DST-IP:"+str(pckt[IP].dst),res))
     if pckt.haslayer(ICMP):
         
         #packet_ICMP(pckt)
         if IP in pckt:
-            if ipadd==pckt[IP].dst:                            
-                print('\u21c8'+str(" [{}] ".format(time.strftime("%H:%M:%S")))+" "+"ICMP-OUT:{}".format(str(len(pckt[UDP]))+"Bytes"+"  "
-                +"IP-VERSION"+str(pckt[IP].version)+"  "+"SRC-MAC:"+str(pckt.src)+"    "+"DST-MAC:"+str(pckt.src)+
-                "    "+"SRC-PORT:"+str(pckt.sport)+"    "+"DST-PORT:"+str(pckt.dport)+"    "+
-                "SRC-IP:"+str(pckt[IP].src)+"    "+"DST-IP:"+str(pckt[IP].dst),res))
-            if ipadd==pckt[IP].src:                            
-                print('\u21ca'+str(" [{}] ".format(time.strftime("%H:%M:%S")))+" "+"ICMP-OUT:{}".format(str(len(pckt[UDP]))+"Bytes"+"  "
-                +"IP-VERSION"+str(pckt[IP].version)+"  "+"SRC-MAC:"+str(pckt.src)+"    "+"DST-MAC:"+str(pckt.src)+
-                "    "+"SRC-PORT:"+str(pckt.sport)+"    "+"DST-PORT:"+str(pckt.dport)+"    "+
-                "SRC-IP:"+str(pckt[IP].src)+"    "+"DST-IP:"+str(pckt[IP].dst),res))         
+            if ipadd==pckt[IP].dst:
+                print(f"{cg}\u2193"*25+f"{cm}ICMP-IN{res}"+f'{cg}\u2193'*25)                         
+                print(str(" [{}] ".format(time.strftime("%H:%M:%S")))+" "+"\nSIZE:{}".format(str(len(pckt[ICMP]))+"Bytes"+"\n"
+                +"IP-VERSION:IPv"+str(pckt[IP].version)+"\n"+"SRC-MAC:"+str(pckt.src).ljust(20)+"    "+"DST-MAC:"+str(pckt.dst)+
+                "\n"+"SRC-PORT:"+str(pckt.sport).ljust(19)+"    "+"DST-PORT:"+str(pckt.dport)+"\n"+
+                "SRC-IP:"+str(pckt[IP].src).ljust(17)+"    "+"DST-IP:"+str(pckt[IP].dst),res))
+            if ipadd==pckt[IP].src:
+                print(f"{cb}\u2191"*25+f"{cm}ICMP-OUT{res}"+f"{cb}\u2191"*25)                            
+                print(str(" [{}] ".format(time.strftime("%H:%M:%S")))+" "+"\nSIZE:{}".format(str(len(pckt[ICMP]))+"Bytes"+"\n"
+                +"IP-VERSION:IPv"+str(pckt[IP].version)+"\n"+"SRC-MAC:"+str(pckt.src).ljust(20)+"    "+"DST-MAC:"+str(pckt.dst)+
+                "\n"+"SRC-PORT:"+str(pckt.sport).ljust(19)+"    "+"DST-PORT:"+str(pckt.dport)+"\n"+
+                "SRC-IP:"+str(pckt[IP].src).ljust(17)+"    "+"DST-IP:"+str(pckt[IP].dst),res))         
+
+
 if __name__=='__main__':
-    sniff(prn=Packet_Monitor,iface=interface)   #to capture http add filter="port 80"        
+    sniff(prn=Packet_Monitor,iface=interface)   #to capture http add filter="port 80"
